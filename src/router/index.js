@@ -7,7 +7,12 @@ const routes = [
 	{
 		path: '/',
 		name: 'home',
-		component: _ => import('@/components/pages/Home.vue'),
+		component: () => import('@/components/pages/Home.vue'),
+	},
+	{
+		path: "/:pathMatch(.*)*",
+		name: "NotFound",
+		component: () => import("@/components/pages/NotFound.vue"),
 	},
 ]
 
@@ -31,10 +36,12 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-	loading.showLoading()
-	// await new Promise(resolve => {
-	// 	setTimeout(_ => resolve(), 500)
-	// })
+	if (to.name !== from.name) {
+		loading.showLoading()
+		await new Promise(resolve => {
+			setTimeout(_ => resolve(), 500)
+		})
+	}
 	next()
 })
 router.afterEach(_ => {

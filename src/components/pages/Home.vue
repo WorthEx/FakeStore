@@ -1,9 +1,63 @@
 <script setup>
-
+import Container from "@/components/Container.vue";
 </script>
 
 <template>
-
+  <div class="min-h-screen relative">
+    <section class="h-screen overflow-hidden grid place-content-center place-items-center">
+      <Container>
+        <div
+            class="flex">
+          <div
+              class="w-full overflow-hidden select-none flex flex-col 2xl:gap-[6rem] md:gap-[4rem] gap-[2rem] justify-between 2xl:p-[4rem] lg:p-[2rem] p-[1rem] backdrop-blur-[.6rem]
+              ring-2 ring-dark/10 rounded-[1rem]">
+            <div class="flex flex-col gap-[1rem]">
+              <div class="flex items-center
+              md:gap-[1rem] gap-[.5rem]
+              2xl:text-[7rem] md:text-[4rem] text-[3rem] leading-none font-bold
+            animate-fade-up animate-ease-out animate-duration-[600ms]">
+                <span class="text-dark">Fake</span>
+                <span class="md:p-[1rem] p-[.5rem] bg-dark text-lilac-light md:rounded-3xl rounded-xl">Store</span>
+              </div>
+              <p class="text-dark 2xl:text-[2rem] md:text-[1.5rem] leading-tight font-medium
+              animate-fade-up animate-ease-out animate-duration-[600ms] animate-delay-[300ms]">
+                Selling goods and clients' data to third parties.<br class="md:block hidden"/>
+                Straight up, no cap.</p>
+            </div>
+            <RouterLink
+                class="group flex gap-4 items-center justify-center
+            *:text-white bg-dark md:rounded-xl rounded-xl px-4 py-4
+            md:w-fit transition-all duration-[250ms] ease-out
+            ring-dark
+            focus:ring-[2px] focus:ring-offset-1 focus:ring-offset-lilac
+            md:focus:ring-4 md:focus:ring-offset-4
+            hover:bg-white hover:ring-white *:hover:text-dark
+            2xl:text-[1.3rem] lg:text-[1.2rem] text-[.9rem] *:leading-none overflow-hidden active:scale-95
+            animate-fade-up animate-duration-[600ms] animate-ease-out animate-delay-[500ms]"
+                to="/#search">
+              <span>Найти товары</span>
+              <i class="bi bi bi-chevron-right md:text-[1.2rem] text-[.9rem]
+          group-hover:translate-x-[.5rem] translate-x-0 transition-transform ease-out"/>
+            </RouterLink>
+          </div>
+          <div class="hidden lg:grid place-content-center place-items-center relative w-[40%]">
+            <svg id="Capa_1" class="absolute 2xl:h-[35rem] h-[21rem] scale-x-[-1] rotate-[-10deg]"
+                 fill="#424874"
+                 stroke="#424874"
+                 stroke-width="0.004389870000000001" version="1.1"
+                 viewBox="0 0 438.99 438.99" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+              <g id="SVGRepo_iconCarrier"> <g> <path
+                  d="M226.861,322.031c-25.64,0-46.501,20.863-46.501,46.511c0,25.643,20.862,46.508,46.501,46.508 c25.641,0,46.517-20.865,46.517-46.508C273.378,342.894,252.511,322.031,226.861,322.031z M226.861,392.637 c-13.286,0-24.088-10.809-24.088-24.096c0-13.285,10.802-24.098,24.088-24.098c13.282,0,24.101,10.812,24.101,24.098 C250.962,381.829,240.157,392.637,226.861,392.637z M422.17,23.938h-55.848L317.6,136.004h-24.43l3.773-10.651l-17.719-6.282 c5.485-7.838,13.593-22.027,5.921-32.523c-8.906-12.164-34.395-8.708-55.004-3.362c-12.637-17.122-30.265-35.861-44.845-32.011 c-12.565,3.324-15.203,19.456-15.87,28.991l-17.74-6.269l-21.992,62.107h-25.62l-15.167-27.283l-44.069,24.498l1.541,2.786H0 l44.827,179.307h231.478L388.369,57.558h33.806c9.281,0,16.812-7.527,16.812-16.81C438.987,31.462,431.451,23.938,422.17,23.938z M271.455,96.264c0.013,0.042,0.783,4.26-8.479,16.559c-0.099,0.128-0.155,0.276-0.254,0.41l-19.239-6.82 c0.163-1.754-0.187-3.568-1.183-5.182c-0.591-0.952-1.247-2-1.924-3.083C255.92,94.691,268.757,93.687,271.455,96.264z M185.97,85.539c0.536-15.021,3.651-18.036,3.556-18.09c3.919-0.355,13.333,8.476,23.231,20.922 c-1.215,0.402-2.375,0.808-3.423,1.171c-1.791,0.627-3.203,1.82-4.179,3.284l-19.253-6.821 C185.923,85.854,185.97,85.703,185.97,85.539z M210.863,108.234l15.847,5.614l-7.844,22.162h-17.841L210.863,108.234z M189.119,169.624h17.83l-14.36,40.528h-17.832L189.119,169.624z M43.062,169.624H65.06l22.526,40.528H53.2L43.062,169.624z M254.257,281.691H71.079l-9.475-37.921h44.663l18.177,32.714l44.081-24.506l-4.561-8.208h16.723l-1.219,3.437l66.017,23.387 l9.506-26.823h15.754L254.257,281.691z M285.064,210.82c-1.413-0.388-2.885-0.667-4.431-0.667h-13.737l14.364-40.528h21.715 L285.064,210.82z M103.262,322.031c-25.638,0-46.5,20.863-46.5,46.511c0,25.643,20.862,46.508,46.5,46.508 c25.643,0,46.515-20.865,46.515-46.508C149.777,342.894,128.905,322.031,103.262,322.031z M103.262,392.637 c-13.283,0-24.088-10.809-24.088-24.096c0-13.285,10.805-24.098,24.088-24.098c13.286,0,24.103,10.812,24.103,24.098 C127.365,381.829,116.548,392.637,103.262,392.637z"/> </g> </g>
+            </svg>
+          </div>
+        </div>
+      </Container>
+    </section>
+    <section id="search" class="h-screen overflow-hidden grid place-content-center place-items-center">
+    </section>
+  </div>
 </template>
 
 <style scoped>
