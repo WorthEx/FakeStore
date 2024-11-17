@@ -11,7 +11,7 @@ const switchSidebar = () => sidebarOpened.value = !sidebarOpened.value
 <template>
   <div class="relative">
     <div
-        class="w-full backdrop-blur-md select-none text-white shadow-[0px_0px_3rem_0px_rgb(66,72,116,40%)]
+        class="w-full backdrop-blur-xl bg-lilac-light/40 select-none text-white shadow-[0px_0px_3rem_0px_rgb(66,72,116,40%)]
         fixed top-0 z-[1000] after:bg-white after:w-full after:bottom-0 after:h-[.05rem] after:absolute">
       <Container>
         <div
@@ -32,6 +32,12 @@ const switchSidebar = () => sidebarOpened.value = !sidebarOpened.value
               after:w-0 after:bg-dark after:duration-150 after:transition-all transition-all active:text-dark"
                 to="/">
               Главная
+            </RouterLink>
+            <RouterLink
+                class="after:block after:h-[1px] hover:after:w-full
+              after:w-0 after:bg-dark after:duration-150 after:transition-all transition-all active:text-dark"
+                to="/#search">
+              Каталог
             </RouterLink>
             <RouterLink
                 class="after:block after:h-[1px] hover:after:w-full
@@ -68,7 +74,15 @@ const switchSidebar = () => sidebarOpened.value = !sidebarOpened.value
       </RouterLink>
       <RouterLink
           class="w-full px-[2rem] py-[1.5rem] active:ml-1 transition-all flex items-center justify-between hover:ml-1 hover:text-bluish
-          animate-fade-down animate-duration-[450ms] animate-ease-out animate-delay-[200ms]"
+          animate-fade-down animate-duration-[300ms] animate-delay-[200ms] animate-ease-out"
+          to="/#search"
+          @click="switchSidebar">
+        Каталог
+        <i class="bi bi-search text-[1rem]"></i>
+      </RouterLink>
+      <RouterLink
+          class="w-full px-[2rem] py-[1.5rem] active:ml-1 transition-all flex items-center justify-between hover:ml-1 hover:text-bluish
+          animate-fade-down animate-duration-[450ms] animate-ease-out animate-delay-[300ms]"
           to="/cart"
           @click="switchSidebar">
         Корзина

@@ -38,9 +38,9 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
 	if (to.name !== from.name) {
 		loading.showLoading()
-		await new Promise(resolve => {
-			setTimeout(_ => resolve(), 500)
-		})
+		// await new Promise(resolve => {
+		// 	setTimeout(_ => resolve(), 500)
+		// })
 	}
 	next()
 })

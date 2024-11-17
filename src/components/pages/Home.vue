@@ -1,15 +1,139 @@
 <script setup>
 import Container from "@/components/Container.vue";
+import {markRaw, onMounted, ref} from "vue";
+import {useLoading} from "@/components/loading/useLoading.js";
+import {toast} from "vue3-toastify";
+import ProductsAPI from "@/apis/ProductsAPI.js";
+import {useModal} from "@/components/modals/useModal.js";
+import SelectCategoryModal from "@/components/modals/SelectCategoryModal.vue";
+import ProductList from "@/components/ProductList.vue";
+
+const currentCategory = ref("All")
+const categories = ref([])
+const products = ref([])
+const persistentList = ref([])
+const query = ref("")
+const loadingState = ref(false)
+const currentPage = ref(1)
+
+const loading = useLoading()
+const modal = useModal()
+const searchInput = ref()
+
+const findByQuery = async () => {
+  products.value = persistentList.value
+  if (query.value !== "" && products.value.length > 0) {
+    products.value = persistentList.value
+    products.value = products.value.filter(product =>
+        product.title.toLowerCase()
+            .includes(query.value.toLowerCase()))
+  }
+}
+
+const fetchByCategory = async (category) => {
+  try {
+    loadingState.value = true
+    const response = await ProductsAPI.getByCategory(category)
+    if (response.status === 200) {
+      products.value = response.data.products
+      persistentList.value = response.data.products
+    }
+  } catch (_) {
+    toast.error('Ошибка при получении категорий.')
+  } finally {
+    loadingState.value = false
+  }
+}
+
+const fetchAll = async (page) => {
+  try {
+    if (page === 1) loadingState.value = true
+    const response = await ProductsAPI.getAll(page)
+    if (response.status === 200) {
+      page === 1 ?
+          products.value = response.data.products :
+          products.value.push(...response.data.products)
+      persistentList.value = products.value
+    }
+  } catch (_) {
+    toast.error('Ошибка при получении категорий.')
+  } finally {
+    loadingState.value = false
+  }
+}
+
+const fetchCategories = async () => {
+  try {
+    loading.showLoading()
+    const response = await ProductsAPI.getCategories()
+    if (response.status === 200) {
+      categories.value = response.data.categories
+    }
+  } catch (_) {
+    toast.error('Ошибка при получении категорий.')
+  } finally {
+    loading.hideLoading()
+  }
+}
+
+const loadMore = async () => {
+  currentPage.value += 1
+  await fetchAll(currentPage.value)
+}
+
+const openCategoryModal = () => {
+  if (categories.value.length < 1) {
+    toast.warn("Категории ещё не загружены, ожидайте.")
+    return
+  }
+  modal.component.value = markRaw(SelectCategoryModal)
+  modal.showModal()
+}
+
+const onCloseCategoryModal = () => {
+  modal.hideModal()
+}
+
+const onSelectCategory = (category) => {
+  currentCategory.value = category
+  query.value = ''
+  onCloseCategoryModal()
+  if (currentCategory.value === 'All') fetchAll(1)
+  else fetchByCategory(currentCategory.value.toLowerCase())
+}
+
+onMounted(async _ => {
+  await fetchCategories()
+  await fetchAll(1)
+})
+
+document.onkeydown = async (evt) => {
+  if (evt.key === "/") {
+    evt.preventDefault()
+    searchInput.value.focus()
+  }
+}
 </script>
 
 <template>
+  <Teleport to="#modal">
+    <Transition>
+      <component :is="modal.component.value"
+                 v-if="modal.show.value"
+                 v-bind="modal.component.value === SelectCategoryModal && {categories: categories}"
+                 @closeModal="modal.component.value === SelectCategoryModal && onCloseCategoryModal()"
+                 @selectCategory="onSelectCategory"/>
+    </Transition>
+  </Teleport>
   <div class="min-h-screen relative">
-    <section class="h-screen overflow-hidden grid place-content-center place-items-center">
+    <section class="h-screen overflow-hidden grid place-content-center place-items-center
+                    bg-gradient-to-t from-lilac-light from-0% to-[50%]">
       <Container>
         <div
             class="flex">
           <div
-              class="w-full overflow-hidden select-none flex flex-col 2xl:gap-[6rem] md:gap-[4rem] gap-[2rem] justify-between 2xl:p-[4rem] lg:p-[2rem] p-[1rem] backdrop-blur-[.6rem]
+              class="w-full overflow-hidden select-none flex flex-col 2xl:gap-[6rem] md:gap-[4rem] gap-[2rem]
+              justify-between 2xl:p-[4rem] lg:p-[2rem] p-[1rem] backdrop-blur-[.4rem]
               ring-2 ring-dark/10 rounded-[1rem]">
             <div class="flex flex-col gap-[1rem]">
               <div class="flex items-center
@@ -35,7 +159,7 @@ import Container from "@/components/Container.vue";
             2xl:text-[1.3rem] lg:text-[1.2rem] text-[.9rem] *:leading-none overflow-hidden active:scale-95
             animate-fade-up animate-duration-[600ms] animate-ease-out animate-delay-[500ms]"
                 to="/#search">
-              <span>Найти товары</span>
+              <span>Find products</span>
               <i class="bi bi bi-chevron-right md:text-[1.2rem] text-[.9rem]
           group-hover:translate-x-[.5rem] translate-x-0 transition-transform ease-out"/>
             </RouterLink>
@@ -55,11 +179,90 @@ import Container from "@/components/Container.vue";
         </div>
       </Container>
     </section>
-    <section id="search" class="h-screen overflow-hidden grid place-content-center place-items-center">
+    <section id="search" class="overflow-hidden relative flex flex-col">
+      <div class="h-[40vh] ring-bluish bg-lilac-light">
+        <Container>
+          <div class="size-full grid place-content-center overflow-hidden">
+            <div class="flex flex-col sm:gap-[2rem] gap-[1rem]">
+              <span class="text-dark font-bold sm:text-[2.4rem] text-[1.6rem] select-none">
+                Поиск и фильтрация товаров по категориям
+              </span>
+              <div class="flex">
+                <input
+                    ref="searchInput"
+                    v-model="query"
+                    class="rounded-l-[.7rem] bg-transparent w-full peer/input
+                  sm:text-[1.4rem] text-[1rem] focus:text-dark text-dark/50 placeholder-dark/50
+                  sm:ps-[1rem] ps-[.7rem] sm:py-[.6rem] py-[.4rem] caret-dark/50 outline-none
+                  transition-all ease-out border-y-2 border-l-2
+                  border-lilac hover:border-dark/50 focus:border-dark"
+                    placeholder="Начните вводить запрос"
+                    type="text"
+                    @input="findByQuery">
+                <div class="grid place-content-center place-items-center px-[1rem] rounded-r-[.7rem]
+                transition-all ease-out cursor-pointer group
+                border-r-2 border-y-2 border-lilac peer-hover/input:border-dark/50 peer-focus/input:border-dark
+              peer-hover/input:text-dark/50 peer-focus/input:text-dark text-lilac"
+                     @click.prevent.stop="findByQuery">
+                  <i class="bi bi-search sm:text-[1.3rem] group-active:scale-[80%]
+                  transition-all ease-out"></i>
+                </div>
+              </div>
+              <div class="flex items-center gap-[1rem] text-dark sm:text-[1.4rem] text-[1rem] mx-auto select-none">
+                <span>Выбранная категория:</span>
+                <div class="rounded-[.5rem] sm:px-[1rem] px-[.7rem] sm:py-[.6rem] py-[.4rem]
+                    ring-dark ring-2 cursor-pointer transition-colors hover:bg-lilac/80 active:bg-lilac/80"
+                     @click="openCategoryModal()">
+                  {{ currentCategory[0].toUpperCase() + currentCategory.slice(1) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
+      <div class="min-h-[60vh] bg-lilac">
+        <Container>
+          <div v-if="loadingState || products.length === 0" class="h-[60vh] grid place-content-center">
+            <div class="flex flex-col items-center gap-[1rem]">
+              <svg class="size-[40px]" viewBox="0 0 200 200"
+                   xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="65" fill="#424874" r="10" stroke="#424874" stroke-width="2">
+                  <animate attributeName="cy" begin="-.4" calcMode="spline" dur="2" keySplines=".5 0 .5 1;.5 0 .5 1"
+                           repeatCount="indefinite" values="65;135;65;"></animate>
+                </circle>
+                <circle cx="100" cy="65" fill="#424874" r="10" stroke="#424874" stroke-width="2">
+                  <animate attributeName="cy" begin="-.2" calcMode="spline" dur="2" keySplines=".5 0 .5 1;.5 0 .5 1"
+                           repeatCount="indefinite" values="65;135;65;"></animate>
+                </circle>
+                <circle cx="160" cy="65" fill="#424874" r="10" stroke="#424874" stroke-width="2">
+                  <animate attributeName="cy" begin="0" calcMode="spline" dur="2" keySplines=".5 0 .5 1;.5 0 .5 1"
+                           repeatCount="indefinite" values="65;135;65;"></animate>
+                </circle>
+              </svg>
+              <span class="sm:text-[1.4rem] text-[1rem] font-light">Загрузка продуктов</span>
+            </div>
+          </div>
+          <ProductList v-else :productList="products"/>
+          <div v-if="currentCategory === 'All'" class="sm:pb-[3rem] pb-[1.5rem]">
+            <div class="rounded-[.5rem] mx-auto ring-2 ring-dark
+            px-[2rem] py-[1rem] w-fit select-none cursor-pointer hover:bg-bluish/50 transition-colors"
+                 @click="loadMore">Load more
+            </div>
+          </div>
+        </Container>
+      </div>
     </section>
   </div>
 </template>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity .2s ease-in;
+}
 
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>

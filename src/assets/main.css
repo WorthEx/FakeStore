@@ -5,7 +5,7 @@
 
 ::selection {
     @apply text-lilac-light;
-    @apply bg-dark;
+    @apply bg-bluish;
 }
 
 .Toastify__toast {

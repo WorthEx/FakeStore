@@ -27,7 +27,7 @@
       <!--        <rect fill='url(#a)' height='800%' transform='translate(0,0)' width='800%'/>-->
       <!--      </svg>-->
       <div
-          class="flex flex-col md:gap-8 gap-4 bg-dark/10 backdrop-blur-lg ring-dark/20 ring-2 rounded-2xl md:p-[4rem] p-4 relative
+          class="flex flex-col md:gap-8 gap-4 bg-dark/10 backdrop-blur-[.5rem] ring-dark/20 ring-2 rounded-2xl md:p-[4rem] p-4 relative
                 md:animate-fade-up animate-once animate-duration-[1500ms] animate-ease-out animate-delay-0 overflow-hidden">
         <div
             class="lg:hidden block absolute z-[-500] left-1/2 -translate-x-1/2
