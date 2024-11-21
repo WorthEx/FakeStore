@@ -140,7 +140,7 @@ document.onkeydown = async (evt) => {
               md:gap-[1rem] gap-[.5rem]
               2xl:text-[7rem] md:text-[4rem] text-[3rem] leading-none font-bold
             animate-fade-up animate-ease-out animate-duration-[600ms]">
-                <span class="text-dark">Fake</span>
+                <span class="text-dark">Tech</span>
                 <span class="md:p-[1rem] p-[.5rem] bg-dark text-lilac-light md:rounded-3xl rounded-xl">Store</span>
               </div>
               <p class="text-dark 2xl:text-[2rem] md:text-[1.5rem] leading-tight font-medium
@@ -156,7 +156,7 @@ document.onkeydown = async (evt) => {
             focus:ring-[2px] focus:ring-offset-1 focus:ring-offset-lilac
             md:focus:ring-4 md:focus:ring-offset-4
             hover:bg-white hover:ring-white *:hover:text-dark
-            2xl:text-[1.3rem] lg:text-[1.2rem] text-[.9rem] *:leading-none overflow-hidden active:scale-95
+            2xl:text-[1.3rem] md:text-[1.2rem] text-[.9rem] *:leading-none overflow-hidden active:scale-95
             animate-fade-up animate-duration-[600ms] animate-ease-out animate-delay-[500ms]"
                 to="/#search">
               <span>Find products</span>
@@ -223,7 +223,7 @@ document.onkeydown = async (evt) => {
       <div class="min-h-[60vh] bg-lilac">
         <Container>
           <div v-if="loadingState || products.length === 0" class="h-[60vh] grid place-content-center">
-            <div class="flex flex-col items-center gap-[1rem]">
+            <div v-if="!query" class="flex flex-col items-center gap-[1rem]">
               <svg class="size-[40px]" viewBox="0 0 200 200"
                    xmlns="http://www.w3.org/2000/svg">
                 <circle cx="40" cy="65" fill="#424874" r="10" stroke="#424874" stroke-width="2">
@@ -241,9 +241,12 @@ document.onkeydown = async (evt) => {
               </svg>
               <span class="sm:text-[1.4rem] text-[1rem] font-light">Загрузка продуктов</span>
             </div>
+            <div v-else class="flex items-center justify-center">
+              <span class="sm:text-[1.4rem] text-[1rem] font-light">Ничего не найдено</span>
+            </div>
           </div>
           <ProductList v-else :productList="products"/>
-          <div v-if="currentCategory === 'All'" class="sm:pb-[3rem] pb-[1.5rem]">
+          <div v-if="currentCategory === 'All' && products.length > 0" class="sm:pb-[3rem] pb-[1.5rem]">
             <div class="rounded-[.5rem] mx-auto ring-2 ring-dark
             px-[2rem] py-[1rem] w-fit select-none cursor-pointer hover:bg-bluish/50 transition-colors"
                  @click="loadMore">Load more

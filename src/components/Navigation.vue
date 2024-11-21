@@ -20,7 +20,7 @@ const switchSidebar = () => sidebarOpened.value = !sidebarOpened.value
               class="flex font-bold sm:text-[1.5rem] text-[1.2rem] items-center group *:transition-all"
               to="/">
             <span
-                class="text-dark group-active:text-lilac-light group-active:bg-dark px-[.5rem] sm:py-[.2rem] py-[.1rem] rounded-md">Fake</span>
+                class="text-dark group-active:text-lilac-light group-active:bg-dark px-[.5rem] sm:py-[.2rem] py-[.1rem] rounded-md">Tech</span>
             <span
                 class="bg-dark group-active:bg-lilac-light text-lilac-light group-active:text-dark
                 px-[.5rem] sm:py-[.2rem] py-[.1rem] rounded-md">Store</span>
@@ -55,7 +55,7 @@ const switchSidebar = () => sidebarOpened.value = !sidebarOpened.value
       <div class="flex justify-between items-center w-full px-[2rem] py-[1.5rem]
                   animate-fade-down animate-duration-[200ms] animate-ease-out">
         <div class="flex gap-[.2rem] font-bold text-[1.5rem] items-center leading-none">
-          <span class="text-lilac-light">Fake</span>
+          <span class="text-lilac-light">Tech</span>
           <span class="text-dark bg-lilac-light px-[.4rem] py-[.2rem] rounded-md">Store</span>
         </div>
         <div

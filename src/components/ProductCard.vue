@@ -1,7 +1,24 @@
 <script setup>
+import {useCartStore} from "@/stores/cart.js";
+import {computed} from "vue";
+
 const props = defineProps({
   product: Object,
+  isInCart: Boolean,
 })
+
+const cartStore = useCartStore()
+
+const addToCart = () => {
+  cartStore.addToCart(props.product)
+}
+
+const removeFromCart = () => {
+  cartStore.removeFromCart(props.product)
+}
+
+const numberOfInstancesInCart = computed(_ => cartStore.numberInCart(props.product.id))
+
 </script>
 
 <template>
@@ -29,17 +46,30 @@ const props = defineProps({
          class="p-[.75rem] flex flex-col justify-between gap-[2rem] bg-lilac-light">
       <div class="flex flex-col gap-[.5rem]">
         <div class="line-clamp-2 text-dark font-medium text-[1rem] break-words">
-          {{ product.title }}
+          {{ props.product.title }}
         </div>
         <div class="line-clamp-2 text-dark/80 text-[1rem] break-words">
-          {{ product.brand ? product.brand[0].toUpperCase() + product.brand.slice(1) : '-' }}
+          {{ props.product.brand ? props.product.brand[0].toUpperCase() + props.product.brand.slice(1) : '-' }}
         </div>
       </div>
-      <button class="active:scale-[98%] bg-dark/80 rounded-[.5rem] text-white sm:py-[.75rem] py-[.5rem] sm:text-[1.25rem] text-[1.1rem]
-      hover:bg-dark/60 transition-all" @click.prevent.stop>${{
-          product.price ? product.price : '?'
-        }}
-      </button>
+      <div :class="!isInCart ? 'active:scale-[98%] hover:bg-dark/60 p-[1rem]' : 'p-[.5rem]'" class="bg-dark/80 rounded-[.5rem] text-white
+       sm:text-[1.25rem] text-[1.1rem] text-center transition-colors"
+           @click.stop.prevent="(!isInCart) && addToCart()">
+        <span v-if="!isInCart">${{ props.product.price }}</span>
+        <div v-else class="flex justify-between items-center">
+          <div
+              class="grid place-content-center bg-lilac-light/25 hover:bg-lilac-light/10 transition-all rounded-[.2rem] p-[.5rem]">
+            <i class="bi bi-dash text-white" @click.prevent.stop="removeFromCart()"></i>
+          </div>
+          <div class="grid place-content-center">
+            <span>{{ numberOfInstancesInCart }}</span>
+          </div>
+          <div
+              class="grid place-content-center bg-lilac-light/25 hover:bg-lilac-light/10 transition-all rounded-[.2rem] p-[.5rem]">
+            <i class="bi bi-plus text-white" @click.prevent.stop="addToCart()"></i>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

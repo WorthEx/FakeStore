@@ -6,13 +6,18 @@ const loading = useLoading()
 const routes = [
 	{
 		path: '/',
-		name: 'home',
+		name: 'Home',
 		component: () => import('@/components/pages/Home.vue'),
 	},
 	{
 		path: "/:pathMatch(.*)*",
 		name: "NotFound",
 		component: () => import("@/components/pages/NotFound.vue"),
+	},
+	{
+		path: "/cart",
+		name: "Cart",
+		component: () => import("@/components/pages/Cart.vue"),
 	},
 ]
 
