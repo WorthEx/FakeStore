@@ -180,9 +180,9 @@ document.onkeydown = async (evt) => {
       </Container>
     </section>
     <section id="search" class="overflow-hidden relative flex flex-col">
-      <div class="h-[40vh] ring-bluish bg-lilac-light">
+      <div class="bg-lilac-light">
         <Container>
-          <div class="size-full grid place-content-center overflow-hidden">
+          <div class="size-full grid place-content-center sm:pt-[15rem] pt-[6rem] sm:pb-[10rem] pb-[2rem]">
             <div class="flex flex-col sm:gap-[2rem] gap-[1rem]">
               <span class="text-dark font-bold sm:text-[2.4rem] text-[1.6rem] select-none">
                 Поиск и фильтрация товаров по категориям

@@ -17,12 +17,13 @@ const app = createApp(App)
 	.use(VueAxios, axios)
 	.use(pinia)
 	.use(router)
-	.use(Vue3Toastify, {
-		position: "top-right",
-		type: "default",
-		theme: "light",
-		autoClose: 2500,
-		transition: toast.TRANSITIONS.SLIDE
-	})
+	.use(Vue3Toastify,
+		{
+			position: "top-right",
+			theme: "light",
+			autoClose: 2500,
+			transition: toast.TRANSITIONS.SLIDE,
+		},
+	)
 
 app.mount('#app')

@@ -9,7 +9,17 @@
 }
 
 .Toastify__toast {
-    font-size: 16px;
+    font-size: 1rem;
+
+    & > * {
+        color: #F4EEFF;
+    }
+
+    --toastify-color-light: #424874;
+    --toastify-color-progress-success: #DCD6F7;
+    --toastify-color-progress-warning: #DCD6F7;
+    --toastify-icon-color-success: #DCD6F7;
+    --toastify-icon-color-warning: #DCD6F7;
 }
 
 .no-scrollbar::-webkit-scrollbar {

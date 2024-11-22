@@ -40,7 +40,7 @@ const loading = useLoading()
   </div>
 </template>
 
-<style scoped>
+<style>
 
 .v-leave-active {
   transition: opacity .2s ease-in;

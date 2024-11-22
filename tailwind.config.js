@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindAnimated from 'tailwindcss-animated'
+
 export default {
 	content: ["./src/**/*.{vue,html}", "./index.html", './public/index.html', "./src/**/*.{vue,js,ts,jsx,tsx,html}"],
 	theme: {
@@ -18,6 +20,6 @@ export default {
 			sans: ['Roboto', 'sans-serif'],
 		},
 	},
-	plugins: [require('tailwindcss-animated')],
+	plugins: [tailwindAnimated],
 }
 
