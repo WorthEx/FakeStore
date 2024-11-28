@@ -62,7 +62,7 @@ watch(cartStore.cart, _ => {
         <div v-else class="flex flex-col sm:gap-[2rem] gap-[1rem] w-full mx-auto py-[5rem] items-center">
           <span
               class="text-center text-dark sm:text-[1.5rem] text-[1rem]">
-          В корзине ниего нет.</span>
+          В корзине ничего нет.</span>
           <RouterLink
               class="group flex gap-4 items-center justify-center
             *:text-white bg-dark md:rounded-xl rounded-xl px-4 py-4

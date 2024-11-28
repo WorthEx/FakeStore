@@ -52,7 +52,7 @@ const isInCart = computed(_ => cartStore.isInCart(product.value.id))
       class="min-h-screen w-full relative sm:pt-[7.5rem] pt-[4.5rem] sm:pb-[3rem] pb-[1rem]">
     <Container>
       <div v-if="product" class="bg-lilac/50 backdrop-blur-[.5rem] size-full rounded-[1rem]
-      flex flex-col overflow-hidden ring-[.1rem] ring-dark">
+      flex flex-col overflow-hidden ring-[.1rem] ring-dark select-none">
         <section class="flex sm:flex-row flex-col-reverse">
           <div class="2xl:p-[2rem] p-[1rem] w-full sm:w-1/2 md:w-2/3 flex flex-col justify-between gap-[2rem]">
             <div class="flex flex-col sm:gap-[2rem] gap-[1rem]">
@@ -103,21 +103,21 @@ const isInCart = computed(_ => cartStore.isInCart(product.value.id))
               </div>
             </div>
             <div
-                :class="!isInCart ? 'active:scale-[98%] hover:bg-dark/60 p-[1rem]' : 'p-[.5rem]'"
+                :class="!isInCart ? 'active:scale-[98%] hover:bg-dark/60 p-[1rem] cursor-pointer ' : 'p-[.5rem]'"
                 class="bg-dark/80 rounded-[.5rem] text-white
        sm:text-[1.25rem] text-[1.1rem] text-center transition-colors w-full md:min-w-[15rem] sm:min-w-[10rem] sm:w-fit overflow-hidden"
                 @click.stop.prevent="!isInCart && addToCart()">
               <span v-if="!isInCart">${{ product.price }}</span>
               <div v-else class="flex justify-between items-center">
                 <div
-                    class="grid place-content-center bg-lilac-light/25 hover:bg-lilac-light/10 transition-all rounded-[.2rem] p-[.5rem]">
+                    class="cursor-pointer grid place-content-center bg-lilac-light/25 hover:bg-lilac-light/10 transition-all rounded-[.2rem] p-[.5rem]">
                   <i class="bi bi-dash text-white" @click.prevent.stop="removeFromCart()"></i>
                 </div>
                 <div class="grid place-content-center">
                   <span>{{ numberOfInstancesInCart }}</span>
                 </div>
                 <div
-                    class="grid place-content-center bg-lilac-light/25 hover:bg-lilac-light/10 transition-all rounded-[.2rem] p-[.5rem]">
+                    class="cursor-pointer grid place-content-center bg-lilac-light/25 hover:bg-lilac-light/10 transition-all rounded-[.2rem] p-[.5rem]">
                   <i class="bi bi-plus text-white" @click.prevent.stop="addToCart()"></i>
                 </div>
               </div>
