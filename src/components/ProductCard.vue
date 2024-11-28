@@ -1,11 +1,13 @@
 <script setup>
 import {useCartStore} from "@/stores/cart.js";
 import {computed} from "vue";
+import router from "@/router/index.js";
 
 const props = defineProps({
   product: Object,
   isInCart: Boolean,
 })
+
 
 const cartStore = useCartStore()
 
@@ -24,7 +26,8 @@ const numberOfInstancesInCart = computed(_ => cartStore.numberInCart(props.produ
 <template>
   <div class="w-full ring-2 ring-bluish rounded-[.7rem] min-h-[10rem] overflow-hidden
   flex flex-col relative select-none
-  animate-fade-up animate-ease-out cursor-pointer group">
+  animate-fade-up animate-ease-out cursor-pointer group"
+       @click.stop.prevent="router.push(`/product/${product.id}`)">
     <div v-if="props.product.image"
          class="relative overflow-hidden select-none bg-white sm:h-[20rem] h-[15rem] grid place-content-center">
       <img :src="props.product.image"
@@ -55,7 +58,7 @@ const numberOfInstancesInCart = computed(_ => cartStore.numberInCart(props.produ
       <div :class="!isInCart ? 'active:scale-[98%] hover:bg-dark/60 p-[1rem]' : 'p-[.5rem]'" class="bg-dark/80 rounded-[.5rem] text-white
        sm:text-[1.25rem] text-[1.1rem] text-center transition-colors"
            @click.stop.prevent="(!isInCart) && addToCart()">
-        <span v-if="!isInCart">${{ props.product.price }}</span>
+        <span v-if="!isInCart">${{ product.price }}</span>
         <div v-else class="flex justify-between items-center">
           <div
               class="grid place-content-center bg-lilac-light/25 hover:bg-lilac-light/10 transition-all rounded-[.2rem] p-[.5rem]">

@@ -62,7 +62,7 @@ watch(cartStore.cart, _ => {
         <div v-else class="flex flex-col sm:gap-[2rem] gap-[1rem] w-full mx-auto py-[5rem] items-center">
           <span
               class="text-center text-dark sm:text-[1.5rem] text-[1rem]">
-          В корзине ни черта нет</span>
+          В корзине ниего нет.</span>
           <RouterLink
               class="group flex gap-4 items-center justify-center
             *:text-white bg-dark md:rounded-xl rounded-xl px-4 py-4
@@ -84,7 +84,8 @@ watch(cartStore.cart, _ => {
     <div class="fixed -translate-x-1/2 left-1/2 bottom-[2rem] w-full px-[1rem] select-none
                 md:w-[760px] md:max-w-[760px]
                 lg:w-[1000px] lg:max-w-[1000px]
-                2xl:w-[1400px] 2xl:max-w-[1400px]">
+                2xl:w-[1400px] 2xl:max-w-[1400px]
+                ">
       <div class="bg-dark/70 ring-2 ring-lilac/60 backdrop-blur-[.2rem] rounded-[1rem]
       flex sm:flex-row flex-col sm:justify-between gap-[1rem] overflow-x-auto
       px-[1rem] sm:py-[.6rem] py-[1rem] md:text-[1.2rem] text-[1rem]">
